@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Test results
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Screenshots and videos
+*.png
+*.webm
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Playwright CLI snapshots
+.playwright-cli/
+
+# Environment variables
+.env
+.env.local
