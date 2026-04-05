@@ -16,7 +16,7 @@ export class LoginPage {
   }
 
   async goto() {
-    await this.page.goto('/account/login?ret=/');
+    await this.page.goto('/account/login');    
     await this.page.waitForLoadState('networkidle');
   }
 
