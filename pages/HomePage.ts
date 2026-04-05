@@ -18,5 +18,14 @@ export class HomePage {
     await this.goto();
     await expect(this.page).toHaveURL(/flipkart\.com\//);
   }
+
+  /**
+   * Complete home page test scenario
+   * Encapsulates: goto -> verify page loaded
+   */
+  async testHomePageLoads() {
+    await this.goto();
+    await this.moveToMainPage();
+  }
 }
 

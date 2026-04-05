@@ -4,51 +4,28 @@ import { HomePage } from '../pages/HomePage';
 
 /**
  * E2E combined test: Login flow followed by Home page flow
- * Tests the complete user journey:
- * 1. Navigate to login page
- * 2. Request OTP with invalid credentials (triggers error)
- * 3. Navigate to home page
- * 4. Verify home page loads
+ * Tests the complete user journey by calling page object scenario methods
  */
 
 test.describe.serial('Flipkart Complete E2E Flow', () => {
   test('Step 1: Login with invalid credentials should show verification error', async ({ page }) => {
     const loginPage = new LoginPage(page);
-
-    // Navigate to login page
-    await loginPage.goto();
-
-    // Close any modal/pop-up if present
-    await loginPage.closeLoginPopupIfPresent();
-
-    // Submit invalid mobile/email to request OTP
-    await loginPage.loginWithMobileOrEmail('9999999999');
-
-    // Assert verification error appears
-    await loginPage.expectVerificationError();
+    await loginPage.testLoginWithInvalidCredentials('9999999999');
   });
 
-  test('Step 2: After login attempt, navigate to home page', async ({ page }) => {
+  test('Step 2: Navigate to home page after login attempt', async ({ page }) => {
     const homePage = new HomePage(page);
-
-    // Navigate to home page
-    await homePage.goto();
-
-    // Verify home page loads successfully
-    await homePage.moveToMainPage();
+    await homePage.testHomePageLoads();
   });
 
-  test('Step 3: Verify home page is fully loaded and responsive', async ({ page }) => {
+  test('Step 3: Verify complete flow from login to home', async ({ page }) => {
+    const loginPage = new LoginPage(page);
     const homePage = new HomePage(page);
 
-    // Navigate to home page
-    await homePage.goto();
+    // Step 1: Attempt login
+    await loginPage.testLoginWithInvalidCredentials('9999999999');
 
-    // Verify URL is correct
-    await homePage.moveToMainPage();
-
-    // Additional check: verify page has expected content
-    const pageTitle = await page.title();
-    console.log(`Page title: ${pageTitle}`);
+    // Step 2: Navigate to home
+    await homePage.testHomePageLoads();
   });
 });

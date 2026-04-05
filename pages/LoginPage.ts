@@ -37,5 +37,16 @@ export class LoginPage {
   async expectVerificationError() {
     await expect(this.page.locator('text=Verification unsuccessful')).toBeVisible({ timeout: 15000 });
   }
+
+  /**
+   * Complete login test scenario with invalid credentials
+   * Encapsulates: goto -> close modal -> submit -> assert error
+   */
+  async testLoginWithInvalidCredentials(identifier: string) {
+    await this.goto();
+    await this.closeLoginPopupIfPresent();
+    await this.loginWithMobileOrEmail(identifier);
+    await this.expectVerificationError();
+  }
 }
 

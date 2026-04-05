@@ -9,9 +9,7 @@ import { HomePage } from '../pages/HomePage';
 
 test.describe('Flipkart home page flow', () => {
   test('Redirect to home page', async ({ page }) => {
-    const homepage = new HomePage(page);
-
-    // 1. navigate to login page
-    await homepage.moveToMainPage();
+    const homePage = new HomePage(page);
+    await homePage.testHomePageLoads();
   });
 });
