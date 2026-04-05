@@ -115,6 +115,7 @@ export class BasePage {
   async waitForElementStable(locator: Locator) {
     await locator.evaluate(el => {
       return new Promise(resolve => {
+        let timeout: NodeJS.Timeout;
         const observer = new MutationObserver(() => {
           clearTimeout(timeout);
           timeout = setTimeout(resolve, 500);
@@ -300,7 +301,7 @@ export class BasePage {
    * Get all text content from page
    */
   async getAllPageText(): Promise<string> {
-    return await this.page.textContent() || '';
+    return (await this.page.locator('body').textContent()) || '';
   }
 
   /**
@@ -677,7 +678,7 @@ export class BasePage {
       const matches = typeof urlPattern === 'string' 
         ? response.url().includes(urlPattern) 
         : response.url().match(urlPattern);
-      return matches && response.status() === statusCode;
+      return (matches && response.status() === statusCode) ? true : false;
     });
   }
 
